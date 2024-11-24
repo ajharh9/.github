@@ -1,0 +1,22 @@
+name: Track Coding Practice Progress
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 0 * * MON'  # This will run every Monday at midnight (UTC)
+
+jobs:
+  update-progress:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Update Progress
+        run: |
+          echo "Progress update: $(date)" >> progress.md
+          git add progress.md
+          git commit -m "Update progress"
+          git push
